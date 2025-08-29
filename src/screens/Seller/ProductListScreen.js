@@ -71,111 +71,205 @@ const ProductListScreen = () => {
         <html>
           <head>
             <style>
-              body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
-              .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #333; padding-bottom: 20px; }
-              .product-info { margin-bottom: 20px; background: #f8f9fa; padding: 15px; border-radius: 8px; }
-              .qr-section { text-align: center; margin: 30px 0; background: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
-              .qr-image { max-width: 200px; height: auto; }
-              .info-row { margin-bottom: 10px; display: flex; }
-              .label { font-weight: bold; color: #333; width: 120px; }
-              .value { color: #666; flex: 1; }
-              .system-explanation { background: #e3f2fd; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #2196f3; }
-              .workflow-section { background: #f3e5f5; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #9c27b0; }
-              .features-section { background: #e8f5e8; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #4caf50; }
-              .section-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #333; }
-              .feature-list { margin-left: 20px; }
-              .feature-item { margin-bottom: 8px; }
-              .workflow-step { margin-bottom: 10px; padding: 8px; background: #fff; border-radius: 4px; }
-              .step-number { font-weight: bold; color: #9c27b0; }
+              @page { margin: 15mm; }
+              body { 
+                font-family: Arial, sans-serif; 
+                margin: 0; 
+                padding: 0; 
+                font-size: 12px; 
+                line-height: 1.3;
+                color: #333;
+              }
+              .header { 
+                text-align: center; 
+                margin-bottom: 15px; 
+                border-bottom: 2px solid #333; 
+                padding-bottom: 10px; 
+              }
+              .header h1 { 
+                margin: 0 0 5px 0; 
+                font-size: 18px; 
+                color: #2563eb;
+              }
+              .header h2 { 
+                margin: 0 0 5px 0; 
+                font-size: 16px; 
+                color: #333;
+              }
+              .header p { 
+                margin: 0; 
+                font-size: 11px; 
+                color: #666; 
+                font-style: italic;
+              }
+              
+              .main-container {
+                display: flex;
+                gap: 15px;
+                margin-bottom: 15px;
+              }
+              
+              .left-section {
+                flex: 1;
+                background: #f8fafc;
+                padding: 12px;
+                border-radius: 6px;
+                border: 1px solid #e2e8f0;
+              }
+              
+              .right-section {
+                flex: 1;
+                background: #f8fafc;
+                padding: 12px;
+                border-radius: 6px;
+                border: 1px solid #e2e8f0;
+              }
+              
+              .section-title { 
+                font-size: 13px; 
+                font-weight: bold; 
+                margin-bottom: 8px; 
+                color: #1e40af;
+                border-bottom: 1px solid #cbd5e1;
+                padding-bottom: 3px;
+              }
+              
+              .info-row { 
+                margin-bottom: 6px; 
+                display: flex; 
+                align-items: center;
+              }
+              .label { 
+                font-weight: bold; 
+                color: #374151; 
+                width: 70px; 
+                font-size: 11px;
+              }
+              .value { 
+                color: #4b5563; 
+                flex: 1; 
+                font-size: 11px;
+              }
+              
+              .qr-section { 
+                text-align: center; 
+                background: #ffffff; 
+                padding: 15px; 
+                border-radius: 6px; 
+                border: 2px solid #3b82f6;
+                margin-bottom: 15px;
+              }
+              .qr-section h3 { 
+                margin: 0 0 8px 0; 
+                font-size: 14px; 
+                color: #1e40af;
+              }
+              .qr-image { 
+                max-width: 120px; 
+                height: auto; 
+                margin: 8px auto;
+              }
+              .qr-instructions {
+                font-size: 10px;
+                color: #6b7280;
+                margin: 8px 0;
+                line-height: 1.2;
+              }
+              
+              .simple-steps {
+                background: #f0f9ff;
+                padding: 12px;
+                border-radius: 6px;
+                border-left: 3px solid #0ea5e9;
+                margin-bottom: 15px;
+              }
+              .simple-steps h4 {
+                margin: 0 0 8px 0;
+                font-size: 12px;
+                color: #0369a1;
+              }
+              .step {
+                margin-bottom: 4px;
+                font-size: 10px;
+                color: #0c4a6e;
+              }
+              .step-number {
+                font-weight: bold;
+                color: #0ea5e9;
+              }
+              
+              .footer {
+                text-align: center;
+                margin-top: 10px;
+                padding: 8px;
+                background: #f1f5f9;
+                border-radius: 4px;
+                font-size: 9px;
+                color: #64748b;
+              }
             </style>
           </head>
           <body>
             <div class="header">
-              <h1>SmartReturn - Product Details & System Overview</h1>
+              <h1>SmartReturn QR Code</h1>
               <h2>${product.productName}</h2>
-              <p><em>QR-Based Return Management System</em></p>
+              <p>Simple Return System - Just Scan & Return</p>
             </div>
             
-            <div class="system-explanation">
-              <div class="section-title">📱 How to Use This QR Code</div>
-              <p><strong>For the person who received this product:</strong></p>
-              
-              <div class="workflow-step">
-                <span class="step-number">1.</span> <strong>Download the SmartReturn App:</strong> Go to your device's app store (Google Play Store for Android or App Store for iOS) and search for "SmartReturn" to download the free mobile application.
+            <div class="main-container">
+              <div class="left-section">
+                <div class="section-title">📦 Product Details</div>
+                <div class="info-row">
+                  <span class="label">Code:</span>
+                  <span class="value">${product.productCode}</span>
+                </div>
+                <div class="info-row">
+                  <span class="label">Size:</span>
+                  <span class="value">${product.productSize}</span>
+                </div>
+                <div class="info-row">
+                  <span class="label">Price:</span>
+                  <span class="value">$${product.productPrice}</span>
+                </div>
               </div>
               
-              <div class="workflow-step">
-                <span class="step-number">2.</span> <strong>Create an Account:</strong> Open the app and tap "Sign Up" to create a new account. You'll need to provide your name, email, and create a password.
-              </div>
-              
-              <div class="workflow-step">
-                <span class="step-number">3.</span> <strong>Log In:</strong> After creating your account, log in with your email and password.
-              </div>
-              
-              <div class="workflow-step">
-                <span class="step-number">4.</span> <strong>Scan the QR Code:</strong> On the main screen, tap the "Scan QR Code" button and point your camera at this QR code to scan it.
-              </div>
-              
-              <div class="workflow-step">
-                <span class="step-number">5.</span> <strong>View Product Details:</strong> The app will show you all the product information and allow you to initiate a return if needed.
-              </div>
-              
-              <div class="workflow-step">
-                <span class="step-number">6.</span> <strong>Return Process:</strong> If you want to return the product, follow the in-app instructions to complete your return request.
-              </div>
-            </div>
-            
-            <div class="product-info">
-              <div class="section-title">📦 Product Information</div>
-              <div class="info-row">
-                <span class="label">Product Code:</span>
-                <span class="value">${product.productCode}</span>
-              </div>
-              <div class="info-row">
-                <span class="label">Size:</span>
-                <span class="value">${product.productSize}</span>
-              </div>
-              <div class="info-row">
-                <span class="label">Quantity:</span>
-                <span class="value">${product.productQuantity}</span>
-              </div>
-              <div class="info-row">
-                <span class="label">Price:</span>
-                <span class="value">$${product.productPrice}</span>
+              <div class="right-section">
+                <div class="section-title">👤 Buyer Info</div>
+                <div class="info-row">
+                  <span class="label">Name:</span>
+                  <span class="value">${product.buyerName}</span>
+                </div>
+                <div class="info-row">
+                  <span class="label">Phone:</span>
+                  <span class="value">${product.buyerPhone}</span>
+                </div>
+                <div class="info-row">
+                  <span class="label">Email:</span>
+                  <span class="value">${product.buyerEmail}</span>
+                </div>
               </div>
             </div>
             
-            <div class="product-info">
-              <div class="section-title">👤 Buyer Information</div>
-              <div class="info-row">
-                <span class="label">Name:</span>
-                <span class="value">${product.buyerName}</span>
-              </div>
-              <div class="info-row">
-                <span class="label">Address:</span>
-                <span class="value">${product.buyerAddress}</span>
-              </div>
-              <div class="info-row">
-                <span class="label">Email:</span>
-                <span class="value">${product.buyerEmail}</span>
-              </div>
-              <div class="info-row">
-                <span class="label">Phone:</span>
-                <span class="value">${product.buyerPhone}</span>
-              </div>
+            <div class="simple-steps">
+              <h4>🚀 How to Return This Product</h4>
+              <div class="step"><span class="step-number">1.</span> Download "SmartReturn" app from App Store/Google Play</div>
+              <div class="step"><span class="step-number">2.</span> Create account with your email</div>
+              <div class="step"><span class="step-number">3.</span> Tap "Scan QR" and point camera at this code</div>
+              <div class="step"><span class="step-number">4.</span> Follow simple return steps in the app</div>
+              <div class="step"><span class="step-number">5.</span> Done! We'll handle the rest</div>
             </div>
             
             <div class="qr-section">
-              <h3>🔍 QR Code</h3>
-              <p><strong>QR Code Value:</strong> ${product.productCode}</p>
-              <p><em>Scan this QR code with the SmartReturn mobile app to access product details and initiate return processes.</em></p>
+              <h3>🔍 Scan This QR Code</h3>
               <img src="${qrDataUrl}" alt="QR Code" class="qr-image" />
+              <div class="qr-instructions">
+                <strong>QR Code Value:</strong> ${product.productCode}<br>
+                <em>This QR code contains all product information needed for returns</em>
+              </div>
             </div>
-
-            <div style="text-align: center; margin-top: 30px; padding: 20px; background: #f5f5f5; border-radius: 8px;">
-              <p><strong>Generated by SmartReturn System</strong></p>
-              <p>Date: ${new Date().toLocaleDateString()}</p>
-              <p>Time: ${new Date().toLocaleTimeString()}</p>
+            
+            <div class="footer">
+              <strong>SmartReturn System</strong> • Generated: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}
             </div>
           </body>
         </html>

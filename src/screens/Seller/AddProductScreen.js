@@ -9,6 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CommonHeader from '../../components/CommonHeader';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
+import { db } from '../../firebase/config';
 
 const fieldDescriptions = {
   productCode: 'Enter a unique code for the product.',
@@ -37,6 +38,7 @@ const AddProductScreen = () => {
 
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const { user } = useAuth();
 
   const handleChange = (key, value) => {
     setProduct({ ...product, [key]: value });
@@ -53,34 +55,40 @@ const AddProductScreen = () => {
       return;
     }
 
-    // Unique productCode ve productName 
-    const codeQuery = query(
-      collection(db, "products"),
-      where("productCode", "==", product.productCode)
-    );
-    const nameQuery = query(
-      collection(db, "products"),
-      where("productName", "==", product.productName)
-    );
-    const [codeSnap, nameSnap] = await Promise.all([
-      getDocs(codeQuery),
-      getDocs(nameQuery)
-    ]);
-    if (!codeSnap.empty) {
-      Alert.alert('Duplicate', 'This product code already exists.');
-      setLoading(false);
-      return;
-    }
-    if (!nameSnap.empty) {
-      Alert.alert('Duplicate', 'This product name already exists.');
-      setLoading(false);
-      return;
-    }
-
-    const sellerEmail = auth.currentUser.email;
+    // Unique productCode ve productName kontrolü
     try {
+      const codeQuery = query(
+        collection(db, "products"),
+        where("productCode", "==", product.productCode)
+      );
+      const nameQuery = query(
+        collection(db, "products"),
+        where("productName", "==", product.productName)
+      );
+      const [codeSnap, nameSnap] = await Promise.all([
+        getDocs(codeQuery),
+        getDocs(nameQuery)
+      ]);
+      if (!codeSnap.empty) {
+        Alert.alert('Duplicate', 'This product code already exists.');
+        setLoading(false);
+        return;
+      }
+      if (!nameSnap.empty) {
+        Alert.alert('Duplicate', 'This product name already exists.');
+        setLoading(false);
+        return;
+      }
+
+      const sellerEmail = user?.email;
+      if (!sellerEmail) {
+        Alert.alert('Error', 'User not authenticated');
+        setLoading(false);
+        return;
+      }
+
       await addProduct({ ...product, sellerEmail });
-      Alert.alert('Success', 'Product added', [
+      Alert.alert('Success', 'Product added successfully', [
         {
           text: 'OK',
           onPress: () => {
@@ -101,7 +109,8 @@ const AddProductScreen = () => {
         buyerPhone: ''
       });
     } catch (error) {
-      Alert.alert('Error', error.message);
+      console.error('Error adding product:', error);
+      Alert.alert('Error', error.message || 'Failed to add product');
     }
     setLoading(false);
   };
