@@ -9,6 +9,7 @@ import {
   RefreshControl,
   Image
 } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { useNotifications } from '../contexts/NotificationContext';
 import { formatDistanceToNow } from 'date-fns';
 
@@ -29,9 +30,17 @@ const NotificationScreen = ({ navigation }) => {
 
     // Notification type based navigation
     if (notification.data?.type === 'return_request') {
-      navigation.navigate('ReturnApproval');
+      try {
+        navigation.navigate('Tabs', { screen: 'Returns' });
+      } catch (error) {
+        console.log('Navigation to Returns tab failed - route may not exist in current navigator');
+      }
     } else if (notification.data?.type === 'return_decision') {
-      navigation.navigate('ReturnStatus');
+      try {
+        navigation.navigate('Tabs', { screen: 'Returns' });
+      } catch (error) {
+        console.log('Navigation to Returns tab failed - route may not exist in current navigator');
+      }
     }
   };
 
@@ -57,14 +66,16 @@ const NotificationScreen = ({ navigation }) => {
         <View style={styles.notificationHeader}>
           <View style={styles.notificationIcon}>
             {item.data?.type === 'return_request' && (
-              <Text style={styles.iconText}>📦</Text>
+              <FontAwesome5 name="box" size={18} color="#3b82f6" />
             )}
             {item.data?.type === 'return_decision' && (
-              <Text style={styles.iconText}>
-                {item.data.decision === 'approved' ? '✅' : '❌'}
-              </Text>
+              <FontAwesome5 
+                name={item.data.decision === 'approved' ? 'check-circle' : 'times-circle'} 
+                size={18} 
+                color={item.data.decision === 'approved' ? '#10b981' : '#ef4444'} 
+              />
             )}
-            {!item.data?.type && <Text style={styles.iconText}>🔔</Text>}
+            {!item.data?.type && <FontAwesome5 name="bell" size={18} color="#6c757d" />}
           </View>
           
           <View style={styles.notificationContent}>
@@ -94,30 +105,43 @@ const NotificationScreen = ({ navigation }) => {
 
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
-      <Text style={styles.emptyStateIcon}>🔔</Text>
-             <Text style={styles.emptyStateTitle}>No Notifications Yet</Text>
-       <Text style={styles.emptyStateSubtitle}>
-         New notifications will appear here when they arrive
-       </Text>
+      <View style={styles.emptyStateIconContainer}>
+        <FontAwesome5 name="bell-slash" size={48} color="#adb5bd" />
+      </View>
+      <Text style={styles.emptyStateTitle}>No Notifications Yet</Text>
+      <Text style={styles.emptyStateSubtitle}>
+        New notifications will appear here when they arrive
+      </Text>
     </View>
   );
 
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Notifications</Text>
-        {unreadCount > 0 && (
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>{unreadCount}</Text>
-          </View>
-        )}
-        {notifications.length > 0 && (
-                     <TouchableOpacity style={styles.markAllReadButton} onPress={markAllAsRead}>
-             <Text style={styles.markAllReadText}>Mark All as Read</Text>
+             {/* Header */}
+       <View style={styles.header}>
+         <View style={styles.headerLeft}>
+           <TouchableOpacity 
+             style={styles.backButton} 
+             onPress={() => navigation.goBack()}
+           >
+             <FontAwesome5 name="arrow-left" size={18} color="#6c757d" />
            </TouchableOpacity>
-        )}
-      </View>
+           <Text style={styles.headerTitle}>Notifications</Text>
+         </View>
+         
+         <View style={styles.headerRight}>
+           {unreadCount > 0 && (
+             <View style={styles.badge}>
+               <Text style={styles.badgeText}>{unreadCount}</Text>
+             </View>
+           )}
+           {notifications.length > 0 && (
+             <TouchableOpacity style={styles.markAllReadButton} onPress={markAllAsRead}>
+               <Text style={styles.markAllReadText}>Mark All as Read</Text>
+             </TouchableOpacity>
+           )}
+         </View>
+       </View>
 
       {/* Notifications List */}
       <FlatList
@@ -150,6 +174,24 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#e9ecef',
   },
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#f8f9fa',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -172,7 +214,7 @@ const styles = StyleSheet.create({
   markAllReadButton: {
     paddingHorizontal: 12,
     paddingVertical: 6,
-    backgroundColor: '#007bff',
+    backgroundColor: '#6c757d',
     borderRadius: 16,
   },
   markAllReadText: {
@@ -207,13 +249,10 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#e9ecef',
+    backgroundColor: '#f8f9fa',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
-  },
-  iconText: {
-    fontSize: 20,
   },
   notificationContent: {
     flex: 1,
@@ -266,8 +305,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 60,
   },
-  emptyStateIcon: {
-    fontSize: 64,
+  emptyStateIconContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: '#f8f9fa',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 16,
   },
   emptyStateTitle: {

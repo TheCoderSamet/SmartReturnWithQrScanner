@@ -234,10 +234,21 @@ class NotificationService {
       const data = response.notification.request.content.data;
       
       // Navigate based on notification type
+      // Note: Navigation will only work if the target route exists in the current navigator
       if (data.type === 'return_request') {
-        navigation.navigate('ReturnApproval');
+        // This navigation is for sellers (Returns tab)
+        try {
+          navigation.navigate('Tabs', { screen: 'Returns' });
+        } catch (error) {
+          console.log('Navigation to Returns tab failed - route may not exist in current navigator');
+        }
       } else if (data.type === 'return_decision') {
-        navigation.navigate('ReturnStatus');
+        // This navigation is for buyers (Returns tab)
+        try {
+          navigation.navigate('Tabs', { screen: 'Returns' });
+        } catch (error) {
+          console.log('Navigation to Returns tab failed - route may not exist in current navigator');
+        }
       }
     });
 

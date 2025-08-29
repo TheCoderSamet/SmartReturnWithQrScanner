@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { View, TouchableOpacity, Animated, Dimensions } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import HomeScreen from '../screens/Buyer/ReturnStatusScreen';
 import QRScannerScreen from '../screens/Buyer/QRScannerScreen';
@@ -10,6 +11,7 @@ import ReturnFormScreen from '../screens/Buyer/ReturnFormScreen';
 import BuyerMapScreen from '../screens/Buyer/BuyerMapScreen';
 import SettingsScreen from '../screens/Buyer/SettingsScreen';
 import NotificationScreen from '../screens/NotificationScreen';
+import NotificationService from '../services/NotificationService';
 
 
 
@@ -220,12 +222,20 @@ const TabScreens = () => {
 };
 
 const BuyerNavigator = () => {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    // Set up notification listeners for buyer-specific navigation
+    const cleanup = NotificationService.setNotificationListeners(navigation);
+    return cleanup;
+  }, [navigation]);
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Tabs" component={TabScreens} />
       <Stack.Screen name="ReturnFormScreen" component={ReturnFormScreen} />
       <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
-
+      <Stack.Screen name="ReturnStatus" component={HomeScreen} />
     </Stack.Navigator>
   );
 };

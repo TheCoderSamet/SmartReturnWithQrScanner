@@ -20,8 +20,9 @@ if (Platform.OS === 'web') {
     const Maps = require('react-native-maps');
     MapView = Maps.default;
     Marker = Maps.Marker;
-    PROVIDER_GOOGLE = Maps.PROVIDER_GOOGLE;
-    console.log('✅ React Native Maps loaded successfully');
+    // Use Apple Maps for iOS, Google Maps for Android
+    PROVIDER_GOOGLE = Platform.OS === 'ios' ? undefined : Maps.PROVIDER_GOOGLE;
+    console.log(`✅ React Native Maps loaded successfully - Using ${Platform.OS === 'ios' ? 'Apple Maps' : 'Google Maps'}`);
   } catch (error) {
     console.error('❌ Error loading react-native-maps:', error);
     // Fallback components
@@ -50,15 +51,57 @@ const BuyerMapScreen = () => {
     fetchUserReturns();
   }, []);
 
+  // Watch for userLocation changes and center map
+  useEffect(() => {
+    if (userLocation && mapRef.current) {
+      mapRef.current.animateToRegion({
+        latitude: userLocation.latitude,
+        longitude: userLocation.longitude,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05
+      });
+    }
+  }, [userLocation]);
+
   const requestLocationPermission = async () => {
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status === 'granted') {
-        const location = await Location.getCurrentPositionAsync({});
+        // Show loading state
+        console.log('Getting current location...');
+        
+        const location = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.High,
+          timeInterval: 5000,
+          distanceInterval: 10
+        });
+        
+        console.log('Location obtained:', location.coords);
         setUserLocation(location.coords);
+        
+        // Center map on user's current location
+        if (mapRef.current) {
+          mapRef.current.animateToRegion({
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05
+          });
+        }
+      } else {
+        Alert.alert(
+          'Location Permission Required',
+          'This app needs location access to show your current position on the map.',
+          [{ text: 'OK' }]
+        );
       }
     } catch (error) {
       console.log('Location permission error:', error);
+      Alert.alert(
+        'Location Error',
+        'Unable to get your current location. Please check your location settings.',
+        [{ text: 'OK' }]
+      );
     }
   };
 
@@ -196,8 +239,13 @@ const BuyerMapScreen = () => {
             ref={mapRef}
             style={styles.map}
             mapType={mapType}
-            provider={PROVIDER_GOOGLE}
-            initialRegion={{
+            {...(PROVIDER_GOOGLE && { provider: PROVIDER_GOOGLE })}
+            initialRegion={userLocation ? {
+              latitude: userLocation.latitude,
+              longitude: userLocation.longitude,
+              latitudeDelta: 0.05,
+              longitudeDelta: 0.05
+            } : {
               latitude: 39.9334,
               longitude: 32.8597,
               latitudeDelta: 0.1,
@@ -226,6 +274,8 @@ const BuyerMapScreen = () => {
                 description={searchQuery}
               />
             )}
+
+
           </MapView>
         </View>
 

@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
@@ -16,6 +17,7 @@ import ReturnApprovalScreen from '../screens/Seller/ReturnApprovalScreen';
 import ApprovedProductsScreen from '../screens/Seller/ApprovedProductsScreen';
 import SettingsScreen from '../screens/Seller/SettingsScreen';
 import NotificationScreen from '../screens/NotificationScreen';
+import NotificationService from '../services/NotificationService';
 
 
 
@@ -263,13 +265,20 @@ const TabScreens = () => {
 };
 
 const SellerNavigator = () => {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    // Set up notification listeners for seller-specific navigation
+    const cleanup = NotificationService.setNotificationListeners(navigation);
+    return cleanup;
+  }, [navigation]);
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Tabs" component={TabScreens} />
-      
+      <Stack.Screen name="AddProduct" component={AddProductScreen} />
+      <Stack.Screen name="ReturnApproval" component={ReturnApprovalScreen} />
       <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
-      
-
     </Stack.Navigator>
   );
 };
