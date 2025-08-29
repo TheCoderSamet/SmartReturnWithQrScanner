@@ -19,8 +19,6 @@ import SettingsScreen from '../screens/Seller/SettingsScreen';
 import NotificationScreen from '../screens/NotificationScreen';
 import NotificationService from '../services/NotificationService';
 
-
-
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 

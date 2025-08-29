@@ -279,7 +279,7 @@ const BuyerMapScreen = () => {
           </MapView>
         </View>
 
-        {/* Location Details Bottom Sheet */}
+        {/* Location Details Bottom Sheet  */}
         {selectedLocation && (
           <View style={styles.bottomSheet}>
             <View style={styles.sheetHeader}>

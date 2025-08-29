@@ -5,7 +5,7 @@ import { db } from '../firebase/config';
 import { collection, addDoc, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
 import Constants from 'expo-constants';
 
-// Configure notification behavior
+// Configure notification behaviors
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,

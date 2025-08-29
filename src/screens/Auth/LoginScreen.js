@@ -14,7 +14,7 @@ const LoginScreen = ({ navigation }) => {
   const validateForm = () => {
     let isValid = true;
     
-    // reset errors
+    // reset error
     setEmailError('');
     setPasswordError('');
 

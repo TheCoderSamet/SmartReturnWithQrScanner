@@ -2,8 +2,7 @@ import { db } from './config';
 import {doc, setDoc, getDoc, collection, addDoc, query, where, getDocs, updateDoc, Timestamp} from 'firebase/firestore';
 import * as Location from 'expo-location';
 
-
-// Kullanıcının rolünü getir
+// Bring User Role
 export const getUserRole = async (uid) => {
   try {
     const docRef = doc(db, 'users', uid);

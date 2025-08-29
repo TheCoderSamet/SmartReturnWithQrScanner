@@ -7,11 +7,13 @@ export const COLORS = {
   success: '#4CAF50'
 };
 
+
 export const ROLES = {
   BUYER: 'buyer',
   SELLER: 'seller',
   ADMIN: 'admin'
 };
+
 
 export const RETURN_STATUS = {
   PENDING: 'pending',

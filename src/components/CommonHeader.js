@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Platform, Animated
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-// SmartReturn Animated Icon Component
+// SmartReturn Animated Icon Components
 const SmartReturnIcon = ({ size = 24, color = '#1a1a1a' }) => {
   const [rotation] = React.useState(new Animated.Value(0));
 

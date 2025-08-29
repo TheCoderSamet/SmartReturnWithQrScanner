@@ -29,7 +29,7 @@ const RegisterScreen = ({ navigation }) => {
   const validateForm = () => {
     let isValid = true;
     
-    // Reset errors
+    // Reset error
     setEmailError('');
     setPhoneError('');
     setPasswordError('');

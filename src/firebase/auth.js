@@ -1,7 +1,5 @@
-import {
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
-  sendPasswordResetEmail, GoogleAuthProvider, signInWithCredential
-} from 'firebase/auth';
+import {  createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
+  sendPasswordResetEmail, GoogleAuthProvider, signInWithCredential} from 'firebase/auth';
 import { auth } from './config';
 import { createUserProfile } from './firestore';
 import * as AuthSession from 'expo-auth-session';

@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import {
-  View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, ScrollView, Modal, Image, RefreshControl
-} from 'react-native';
+import {  View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, ScrollView, Modal, Image, RefreshControl } from 'react-native';
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase/config';
 import { logoutUser } from '../../firebase/auth';
@@ -292,7 +290,7 @@ const SettingsScreen = () => {
             </View>
           </View>
 
-          {/* About Section */}
+          {/* About Sections */}
           <View style={styles.card}>
             <View style={styles.sectionHeader}>
               <View style={styles.sectionIconContainer}>

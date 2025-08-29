@@ -28,7 +28,7 @@ export const NotificationProvider = ({ children }) => {
 
     const setupNotificationListener = async () => {
       try {
-        // First try simple query (doesn't require index)
+        // First try simple query doesn't require index
         const simpleQuery = query(
           collection(db, 'notifications'),
           where('userId', '==', user.uid)

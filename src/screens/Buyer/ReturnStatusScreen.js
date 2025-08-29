@@ -111,7 +111,7 @@ const ReturnStatusScreen = () => {
           }
         ]}
       >
-        {/* Status Header */}
+        {/* Status Headers */}
         <View style={styles.statusHeader}>
           <View style={styles.statusLeft}>
             <FontAwesome5 

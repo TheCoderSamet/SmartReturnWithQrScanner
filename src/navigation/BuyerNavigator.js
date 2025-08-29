@@ -182,8 +182,6 @@ const TabScreens = () => {
           }}
         />
 
-
-
         <Tab.Screen
           name="Settings"
           component={SettingsScreen}

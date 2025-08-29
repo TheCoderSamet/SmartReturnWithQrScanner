@@ -10,7 +10,7 @@ const NotificationScreen = ({ navigation }) => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    // Refresh notifications automatically handled by context
+    // Refresh notifications automatically handled by contexts
     setTimeout(() => setRefreshing(false), 1000);
   };
 

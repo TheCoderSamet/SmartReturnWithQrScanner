@@ -13,7 +13,7 @@ const QRScannerScreen = () => {
   const [scanLineAnim] = useState(new Animated.Value(0));
   const navigation = useNavigation();
 
-  // Scanning line animation
+  // Scanning line animations
   useEffect(() => {
     const animateScanLine = () => {
       Animated.sequence([
