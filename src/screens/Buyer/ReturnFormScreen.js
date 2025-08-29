@@ -11,7 +11,7 @@ import NotificationService from '../../services/NotificationService';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CommonHeader from '../../components/CommonHeader';
 
-const width = 375; // Fixed width instead of Dimensions.get('window').width
+const width = 375; 
 
 const ReturnFormScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -33,7 +33,7 @@ const ReturnFormScreen = ({ route }) => {
     sellerEmail: ''
   });
 
-  // Seller'ın businessPhone'ını al
+  // Seller businessPhone
   const getSellerBusinessPhone = async (sellerEmail) => {
     try {
       const usersQuery = query(collection(db, 'users'), where('email', '==', sellerEmail));
@@ -117,7 +117,7 @@ const ReturnFormScreen = ({ route }) => {
       return;
     }
 
-    // Aynı kullanıcı aynı ürüne tekrar iade gönderemesin:
+    // same user cannot return the same product again
     try {
       const returnsQuery = query(
         collection(db, 'returns'),
@@ -134,7 +134,7 @@ const ReturnFormScreen = ({ route }) => {
      return;
      }
 
-      // Manuel modda girilen ürün kodu sistemde varsa engelle (güvenlik):
+      // block the product code entered in manual mode if it exists in the system
       if (manualMode && formProduct.productCode) {
         const checkQuery = query(
           collection(db, 'products'),
@@ -148,14 +148,14 @@ const ReturnFormScreen = ({ route }) => {
         }
       }
 
-      // Fotoğrafları Cloudinary'ye yükle
+      // Photo Cloudinary
       const photoUrls = [];
       for (const uri of photos) {
         const url = await uploadToCloudinary(uri);
         photoUrls.push(url);
       }
 
-      // Seller'ın businessPhone'ını al
+      // Seller 
       const sellerBusinessPhone = await getSellerBusinessPhone(formProduct.sellerEmail);
 
       const data = {
@@ -173,7 +173,7 @@ const ReturnFormScreen = ({ route }) => {
 
       await submitReturnForm(data);
       
-      // Seller'a bildirim gönder
+      // Seller'a notification
       try {
         await NotificationService.sendReturnRequestNotification(
           formProduct.sellerEmail,

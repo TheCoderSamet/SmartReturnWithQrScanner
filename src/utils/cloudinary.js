@@ -16,7 +16,7 @@ const {
   CLOUDINARY_UPLOAD_PRESET,
 } = getExpoExtra();
 
-// Cloudinary 
+// Cloudinary configuration
 const CLOUD_NAME = CLOUDINARY_CLOUD_NAME;
 const UPLOAD_PRESET = CLOUDINARY_UPLOAD_PRESET;
 

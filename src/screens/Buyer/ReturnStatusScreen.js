@@ -8,7 +8,7 @@ import { useNotifications } from '../../contexts/NotificationContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CommonHeader from '../../components/CommonHeader';
 
-const width = 375; // Fixed width instead of Dimensions.get('window').width
+const width = 375; 
 
 const statusMap = {
   approved: { 

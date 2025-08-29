@@ -44,7 +44,7 @@ const RegisterScreen = ({ navigation }) => {
       isValid = false;
     }
 
-    // Phone validation
+    // phone validation
     if (!phone.trim()) {
       setPhoneError('Phone number is required');
       isValid = false;
@@ -53,7 +53,7 @@ const RegisterScreen = ({ navigation }) => {
       isValid = false;
     }
 
-    // Password validation
+    // password validation
     if (!password.trim()) {
       setPasswordError('Password is required');
       isValid = false;
@@ -62,7 +62,7 @@ const RegisterScreen = ({ navigation }) => {
       isValid = false;
     }
 
-    // Confirm password validation
+    // confirm password validation
     if (!confirmPassword.trim()) {
       setConfirmPasswordError('Please confirm your password');
       isValid = false;

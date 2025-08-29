@@ -18,7 +18,7 @@ const NotificationScreen = ({ navigation }) => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    // Refresh işlemi context'te otomatik olarak yapılıyor
+    // Refresh notifications automatically handled by context
     setTimeout(() => setRefreshing(false), 1000);
   };
 
@@ -27,7 +27,7 @@ const NotificationScreen = ({ navigation }) => {
       await markAsRead(notification.id);
     }
 
-    // Bildirim tipine göre yönlendirme
+    // Notification type based navigation
     if (notification.data?.type === 'return_request') {
       navigation.navigate('ReturnApproval');
     } else if (notification.data?.type === 'return_decision') {

@@ -49,14 +49,14 @@ const SettingsScreen = () => {
           avatarUrl: data.avatarUrl || ''
         });
       }
-      // Kullanıcı rolünü çek
+      // User role fetch
       const role = await getUserRole(uid);
       setUserRole(role);
     };
     fetchProfileAndRole();
   }, []);
 
-  // Profil fotoğrafı seç ve yükle
+  // Photo picker and upload
   const handlePickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permissionResult.granted) {

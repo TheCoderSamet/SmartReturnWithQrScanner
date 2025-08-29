@@ -49,17 +49,27 @@ export default {
         "android.permission.WRITE_EXTERNAL_STORAGE",
         "android.permission.RECEIVE_BOOT_COMPLETED",
         "android.permission.VIBRATE",
-        "android.permission.WAKE_LOCK"
+        "android.permission.WAKE_LOCK",
+        "android.permission.INTERNET"
       ],
       // Android için bildirim ayarları
-      useNextNotificationsApi: true
+      useNextNotificationsApi: true,
+      // Google Maps için gerekli ayarlar
+      config: {
+        googleMaps: {
+          apiKey: "AIzaSyAlequrRR7Nx8cQbHCKMo3L6DRtm3-1tH8"
+        }
+      }
     },
     
     ios: {
       supportsTablet: true,
       // iOS için bildirim ayarları
       infoPlist: {
-        UIBackgroundModes: ["remote-notification"]
+        UIBackgroundModes: ["remote-notification"],
+        // iOS için location ayarları
+        NSLocationWhenInUseUsageDescription: "This app needs access to location to show your position on the map and find nearby return locations.",
+        NSLocationAlwaysAndWhenInUseUsageDescription: "This app needs access to location to show your position on the map and find nearby return locations."
       }
     },
     

@@ -32,7 +32,7 @@ const ApprovedProductsScreen = () => {
         id: doc.id
       }));
       
-      // Sort by approvedAt if it exists, otherwise by document creation time
+      // Sort by approvedAt if it exists,otherwise by document creation time
       const sortedData = data.sort((a, b) => {
         const aTime = a.approvedAt ? a.approvedAt.toDate ? a.approvedAt.toDate() : new Date(a.approvedAt) : new Date(0);
         const bTime = b.approvedAt ? b.approvedAt.toDate ? b.approvedAt.toDate() : new Date(b.approvedAt) : new Date(0);

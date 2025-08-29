@@ -53,7 +53,7 @@ const ReturnApprovalScreen = () => {
     try {
       await updateReturnStatus(id, decision, address);
       
-      // Buyer'a bildirim gönder
+      // Buyer'a notification
       try {
         const request = requests.find(req => req.id === id);
         if (request) {

@@ -1,13 +1,35 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, Dimensions, Platform, Linking } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { useAuth } from '../../firebase/authContext';
 import { getReturnsByBuyer } from '../../firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CommonHeader from '../../components/CommonHeader';
+
+// Platform-specific map imports
+let MapView, Marker, PROVIDER_GOOGLE;
+if (Platform.OS === 'web') {
+  // Web-specific map components
+  MapView = () => <View style={styles.webMapPlaceholder}><Text style={styles.webMapText}>Map View (Web)</Text></View>;
+  Marker = () => null;
+  PROVIDER_GOOGLE = 'google';
+} else {
+  // Native map components
+  try {
+    const Maps = require('react-native-maps');
+    MapView = Maps.default;
+    Marker = Maps.Marker;
+    PROVIDER_GOOGLE = Maps.PROVIDER_GOOGLE;
+    console.log('✅ React Native Maps loaded successfully');
+  } catch (error) {
+    console.error('❌ Error loading react-native-maps:', error);
+    // Fallback components
+    MapView = () => <View style={styles.webMapPlaceholder}><Text style={styles.webMapText}>Map Error: {error.message}</Text></View>;
+    Marker = () => null;
+    PROVIDER_GOOGLE = 'google';
+  }
+}
 
 const { height, width } = Dimensions.get('window');
 
@@ -174,6 +196,7 @@ const BuyerMapScreen = () => {
             ref={mapRef}
             style={styles.map}
             mapType={mapType}
+            provider={PROVIDER_GOOGLE}
             initialRegion={{
               latitude: 39.9334,
               longitude: 32.8597,
@@ -520,6 +543,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     letterSpacing: 0.3,
+  },
+  webMapPlaceholder: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#e0e0e0',
+  },
+  webMapText: {
+    fontSize: 18,
+    color: '#333',
+    fontWeight: 'bold',
   },
 });
 

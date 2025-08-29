@@ -139,12 +139,12 @@ const QRScannerScreen = () => {
               <Animated.View 
                 style={[
                   styles.scanLine, 
-                  {  //1. OPACITY ANIMATION
+                  {  //1.OPACITY ANIMATION
                     opacity: scanLineAnim.interpolate({ 
                       inputRange: [0, 5],
                       outputRange: [0.3, 1]
                     }),
-                    transform: [{  // 2. SCALE ANIMATION
+                    transform: [{  // 2.SCALE ANIMATION
                       scale: scanLineAnim.interpolate({
                         inputRange: [0, 1],
                         outputRange: [0.85, 1.05]

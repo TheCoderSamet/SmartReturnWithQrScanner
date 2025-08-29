@@ -53,7 +53,7 @@ const AddProductScreen = () => {
       return;
     }
 
-    // --- Unique productCode ve productName kontrolü ---
+    // Unique productCode ve productName 
     const codeQuery = query(
       collection(db, "products"),
       where("productCode", "==", product.productCode)

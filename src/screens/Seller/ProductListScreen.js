@@ -37,14 +37,14 @@ const ProductListScreen = () => {
     }, [fetchProducts])
   );
 
-  // Unique buyers (arama uygulanmış)
+  // Unique buyers search applied
   const uniqueBuyers = Array.from(
     new Set(products.map(p => p.buyerName))
   )
     .filter(name => name.toLowerCase().includes(buyerSearch.toLowerCase()))
     .map(name => ({ buyerName: name }));
 
-  // Seçilen alıcının ürünleri (arama uygulanmış)
+  // Seçilen alıcının ürünleri 
   const buyerProducts = selected
     ? products
         .filter(p => p.buyerName === selected.buyerName)

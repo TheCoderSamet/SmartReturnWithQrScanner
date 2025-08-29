@@ -61,7 +61,7 @@ const SettingsScreen = () => {
     fetchProfile();
   }, [fetchProfile]);
 
-  // Profil fotoğrafı seç ve yükle
+  // Profile photo picker and upload
   const handlePickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permissionResult.granted) {
@@ -133,7 +133,7 @@ const SettingsScreen = () => {
     }
   };
 
-  // Hesap silme işlemi
+  // Account deletion
   const handleDeleteAccount = async () => {
     if (!deletePassword) {
       Alert.alert('Error', 'Please enter your password to confirm');
