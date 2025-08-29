@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-  RefreshControl,
-  Image
-} from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert, RefreshControl, Image} from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNotifications } from '../contexts/NotificationContext';
 import { formatDistanceToNow } from 'date-fns';

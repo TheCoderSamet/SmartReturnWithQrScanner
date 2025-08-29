@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CommonHeader from '../../components/CommonHeader';
 
-// Platform-specific map imports
+// Platform-specific map import
 let MapView, Marker, PROVIDER_GOOGLE;
 if (Platform.OS === 'web') {
   // Web-specific map components
