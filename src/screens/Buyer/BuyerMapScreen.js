@@ -22,9 +22,9 @@ if (Platform.OS === 'web') {
     Marker = Maps.Marker;
     // Use Apple Maps for iOS, Google Maps for Android
     PROVIDER_GOOGLE = Platform.OS === 'ios' ? undefined : Maps.PROVIDER_GOOGLE;
-    console.log(`✅ React Native Maps loaded successfully - Using ${Platform.OS === 'ios' ? 'Apple Maps' : 'Google Maps'}`);
+    console.log(` React Native Maps loaded successfully - Using ${Platform.OS === 'ios' ? 'Apple Maps' : 'Google Maps'}`);
   } catch (error) {
-    console.error('❌ Error loading react-native-maps:', error);
+    console.error(' Error loading react-native-maps:', error);
     // Fallback components
     MapView = () => <View style={styles.webMapPlaceholder}><Text style={styles.webMapText}>Map Error: {error.message}</Text></View>;
     Marker = () => null;
